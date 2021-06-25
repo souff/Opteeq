@@ -10,8 +10,10 @@ from google.cloud.vision_v1.types.image_annotator import AnnotateImageResponse
 
 def request_generator(image_folder: str) -> Iterator[Tuple[str, AnnotateImageResponse]]:
     """
-    Create an iterator which return a tuple image name and the request from google vision for each
-    file in image_folder.
+    Return an iterator which return a tuple:
+                            - name of image
+                            - result google vision API request
+    For each file in image_folder.
 
     :param image_folder: path of the image folder
     :return: iterator, tuple name of image and google vision response
@@ -26,7 +28,7 @@ def request_generator(image_folder: str) -> Iterator[Tuple[str, AnnotateImageRes
 
 def via_json(image_folder: str = "image") -> None:
     """
-    Build json for VGG Image Annotator with anotation from google cloud response.
+    Build json for VGG Image Annotator with annotation from google cloud response.
 
     :param image_folder: path of the image folder
     """
