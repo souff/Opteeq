@@ -26,5 +26,5 @@ Import google vision annotation to [VGG Image Annotator](https://www.robots.ox.a
 ## Result
 
 
-| ![via0](./doc/via0.png)   |      ![via](./doc/via.png)      |  ![via2](./doc/via2.png) |
+| ![via0](./via/doc/via0.png)   |      ![via](./via/doc/via.png)      |  ![via2](./via/doc/via2.png) |
 |----------|:-------------:|------:|
