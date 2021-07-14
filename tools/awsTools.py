@@ -17,7 +17,8 @@ class Bucket:
         if object_name is None:
             object_name = os.path.basename(file_path)
         try:
-            self.client.upload_file(file_path, object_name)
+            self.client.upload_file(file_path, object_name,
+                                    ExtraArgs={"ACL": "bucket-owner-full-control"})
         except ClientError as e:
             logging.error(e)
 
