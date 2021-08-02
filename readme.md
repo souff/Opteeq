@@ -1,3 +1,7 @@
+# AWS structure
+
+![struct](tools/aws/aws_Diagram.png)
+
 # Rename upload
 
 Rename all the file from a folder and upload it to AWS S3 bucket.

@@ -4,6 +4,7 @@ import os
 import uuid
 from typing import Iterator, Tuple
 
+import numpy as np
 from google.cloud import vision
 from google.cloud.vision_v1.types.image_annotator import AnnotateImageResponse
 
