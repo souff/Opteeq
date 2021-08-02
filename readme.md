@@ -1,6 +1,6 @@
 # AWS structure
 
-![struct](tools/aws/aws_Diagram.png)
+![image](tools/aws/aws_Diagram.png)
 
 # Rename upload
 
