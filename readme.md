@@ -2,7 +2,7 @@
 
 ![image](tools/aws/aws_Diagram.png)
 
-# Rename upload
+# A Rename upload
 
 Rename all the file from a folder and upload it to AWS S3 bucket.
 
@@ -11,7 +11,7 @@ Rename all the file from a folder and upload it to AWS S3 bucket.
 2. config conf.json
 3. `python3 rename_upload.py`
 
-# Via converter
+# C Via converter
 
 Import google vision annotation to [VGG Image Annotator](https://www.robots.ox.ac.uk/~vgg/software/via/)
 .

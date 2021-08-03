@@ -1,7 +1,7 @@
 import json
 import os
 import pathlib
-from tools.awsTools import Bucket
+from tools.aws.awsTools import Bucket
 
 
 def upload(user: str, folder: str, start: int, bucket_name: str):
