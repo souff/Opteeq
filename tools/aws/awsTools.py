@@ -5,10 +5,18 @@ from botocore.exceptions import ClientError
 import os
 import json
 from typing import Union
+from itertools import cycle
 
 
 class Bucket:
-    def __init__(self, bucket_name):
+    """
+    Aws bucket
+    """
+
+    def __init__(self, bucket_name: str):
+        """
+        :param bucket_name: bucket name
+        """
         self.client = boto3.resource("s3").Bucket(bucket_name)
 
     def upload(self, file_path: str, object_name: str = None) -> None:
@@ -58,8 +66,69 @@ class Bucket:
         """
         return self.client.Object(key).get()["Body"].read()
 
+    def get_last_put(self) -> Union[str, None]:
+        """
+        get the key of the last put object
+
+        :return: key of the last put object, return None if the bucket is empty
+        """
+        sorted_files = sorted(self.client.objects.filter(), key=lambda x: x.last_modified,
+                              reverse=True)
+        if sorted_files:
+            return sorted_files[0].key
+        else:
+            return None
+
+
+class BucketCounter(Bucket):
+    """
+    Aws bucket with a cycle on annotator names.
+    """
+
+    def __init__(self, bucket_name: str, annotator_names: list):
+        """
+        :param bucket_name: bucket name
+        :param annotator_names: list the name of all the annotator
+        """
+        super().__init__(bucket_name)
+        self.annotator_cycle = cycle((lambda i: annotator_names[i:] + annotator_names[:i])(
+            self.get_last_uploader_index(annotator_names) + 1))
+
+    def get_last_uploader_index(self, annotator_names: list) -> int:
+        """
+        Get the index of the last uploader in the annotator list name
+        :param annotator_names: list the name of all the annotator
+        :return: index of last uploader, -1 if error
+        """
+        try:
+            return annotator_names.index(self.get_last_put().split("_")[0])
+        # value error not in list, attribute error try to split None
+        except (ValueError, AttributeError):
+            # -1: the next item will be the first
+            return -1
+
+    def put_object_annotator(self, content: Union[str, dict, int, float], key: str) -> str:
+        """
+        Function to upload python variable in s3.
+
+        Convert dict in json and other python variable in string, convert in bytes and upload to s3.
+
+        Add cycle annotator on the key.
+
+        :param content: python variable to upload
+        :param key: key for s3 object
+        :return: name of the annotator for the curent cycle
+        """
+        annotator = next(self.annotator_cycle)
+        self.put_object(content, f"{annotator}_{key}")
+        return annotator
+
 
 class DynamoDB:
+    """
+    Aws dynamoDB
+    """
+
     def __init__(self, region, table_name):
         self.client = boto3.resource('dynamodb', region_name=region).Table(table_name)
 

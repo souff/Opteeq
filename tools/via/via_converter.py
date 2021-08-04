@@ -3,7 +3,7 @@ import json
 import os
 from typing import Iterator, Tuple, List, Union
 from tools.aws.awsTools import Bucket
-from default import default
+from .structure.default import default
 from google.cloud import vision
 from google.cloud.vision_v1.types.image_annotator import AnnotateImageResponse
 
