@@ -1,3 +1,6 @@
+"""
+Part A cf schema
+"""
 import json
 import os
 import pathlib
@@ -16,7 +19,8 @@ def upload(user: str, folder: str, start: int, bucket_name: str):
     """
     bucket = Bucket(bucket_name)
     for filename in os.listdir(folder):
-        bucket.upload(os.path.join(folder, filename), f"{user}_{start}{pathlib.Path(filename).suffix}")
+        bucket.upload(os.path.join(folder, filename),
+                      f"{user}_{start}{pathlib.Path(filename).suffix}")
         start += 1
     return start
 

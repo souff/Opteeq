@@ -48,14 +48,14 @@ class Bucket:
             content = str(content)
         self.client.put_object(Body=bytes(content.encode("UTF-8")), Key=key)
 
-    def download(self, key: str, file_path: str) -> None:
+    def download(self, key: str, directory: str) -> None:
         """
         Download a file from Bucket
 
         :param key: object key
-        :param file_path: destination path
+        :param file_path: destination path directory
         """
-        self.client.download_file(key, file_path)
+        self.client.download_file(key, os.path.join(directory, key))
 
     def read(self, key: str) -> bytes:
         """
@@ -78,6 +78,15 @@ class Bucket:
             return sorted_files[0].key
         else:
             return None
+
+    def list_object_search_key(self, key_part: str) -> list:
+        """
+        list all object in the bucket which contains key_part in their key
+        :param key_part: string part of the key
+        :return: list of object
+        """
+
+        return [i.key for i in self.client.objects.all() if key_part in i.key]
 
 
 class BucketCounter(Bucket):

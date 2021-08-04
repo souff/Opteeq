@@ -1,3 +1,6 @@
+"""
+Part C cf schema
+"""
 from tools.aws.awsTools import DynamoDB, BucketCounter
 from tools.via.via_converter import via_json
 import time
