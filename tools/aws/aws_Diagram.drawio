@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-08-03T14:49:19.585Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.115 Safari/537.36" etag="Eb46ESjm7Zkry8mdaSl0" version="14.9.3" type="github">
+<mxfile host="app.diagrams.net" modified="2021-08-04T20:24:12.687Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.115 Safari/537.36" etag="YZXPrMCWjDprORY00kSU" version="14.9.3" type="github">
   <diagram id="-ga6hsOEGiyw53PDkv4c" name="Page-1">
     <mxGraphModel dx="1422" dy="782" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -39,11 +39,6 @@
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-10" value="update" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="0uKCtbiLuTCNgKzWHR9k-9" vertex="1" connectable="0">
           <mxGeometry x="0.5282" y="2" relative="1" as="geometry">
             <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="0uKCtbiLuTCNgKzWHR9k-11" value="get image&lt;br&gt;key" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="0uKCtbiLuTCNgKzWHR9k-12" target="0uKCtbiLuTCNgKzWHR9k-47" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="770" y="790.8299999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-12" value="Amazon DynamoDB" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.dynamodb;" parent="1" vertex="1">
@@ -176,17 +171,28 @@
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-48" value="" style="group" parent="0uKCtbiLuTCNgKzWHR9k-46" vertex="1" connectable="0">
           <mxGeometry x="50" width="120" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="0uKCtbiLuTCNgKzWHR9k-49" value="Local:&lt;br&gt;- get id of image needed&lt;br&gt;- download image and via json" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/267_Python_logo-128.png" parent="0uKCtbiLuTCNgKzWHR9k-48" vertex="1">
+        <mxCell id="0uKCtbiLuTCNgKzWHR9k-49" value="Local:&lt;br&gt;- download json with the right &lt;br&gt;annotator name &lt;br&gt;and not sore localy&lt;br&gt;- extract image key from json&lt;br&gt;- download image" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/267_Python_logo-128.png" parent="0uKCtbiLuTCNgKzWHR9k-48" vertex="1">
           <mxGeometry y="15" width="68" height="68" as="geometry" />
         </mxCell>
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-50" value="VIA" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;" parent="0uKCtbiLuTCNgKzWHR9k-48" vertex="1">
-          <mxGeometry x="12.199999999999989" y="150" width="45.6" height="61.800000000000004" as="geometry" />
+          <mxGeometry x="11.199999999999989" y="179.17000000000002" width="45.6" height="61.800000000000004" as="geometry" />
         </mxCell>
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-51" value="D" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="768" y="1070.83" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="0uKCtbiLuTCNgKzWHR9k-52" value="Amazon SQS" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.sqs;" parent="1" vertex="1">
           <mxGeometry x="510" y="279.83" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="OJoio6pD2PtJ5NFqTnMK-3" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="830" y="580.83" as="sourcePoint" />
+            <mxPoint x="970" y="581" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OJoio6pD2PtJ5NFqTnMK-4" value="get image key&amp;nbsp;&lt;br&gt;without annotator" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="OJoio6pD2PtJ5NFqTnMK-3">
+          <mxGeometry x="0.1571" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
