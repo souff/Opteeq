@@ -201,3 +201,22 @@ class DynamoDB:
                                ':a': annotator,
                            },
                            ReturnValues="UPDATED_NEW")
+
+
+class Rekognition:
+    def __init__(self, bucket=None, region="eu-west-1"):
+        """
+        :param bucket: bucket name
+        :param region: region of the aws rekognition service
+        """
+        self.bucket = bucket
+        self.client = boto3.client('rekognition', region)
+
+    def get_text(self, key: str) -> dict:
+        """
+        Get text annotation for an image.
+
+        :param key: key of image in the bucket
+        :return: dict response from aws rekognition
+        """
+        return self.client.detect_text(Image={'S3Object': {'Bucket': self.bucket, 'Name': key}})

@@ -2,7 +2,7 @@ import io
 import json
 import os
 from typing import Iterator, Tuple, List, Union
-from tools.aws.awsTools import Bucket
+from tools.aws.awsTools import Bucket, Rekognition
 from .structure.default import default
 from google.cloud import vision
 from google.cloud.vision_v1.types.image_annotator import AnnotateImageResponse
@@ -86,6 +86,34 @@ def via_json(list_image: list, source_path: str, local: bool = False) -> dict:
                     "all_points_y": [point.y for point in box.bounding_poly.vertices],
                     "name": "polygon"}})
         output["_via_img_metadata"][file_name] = image.copy()
+    return output
+
+
+def via_json2(list_image: list, bucket: str, width=717, height=951) -> dict:
+    """
+    Build dict for VGG Image Annotator with annotation from aws rekognition.
+    All image need to be upload on S3 and resize before.
+
+    :param list_image: list all image to annotate with google vision api.
+    :param bucket: bucket name
+    :param width: image width
+    :param height: image height
+    :return: dict with via format
+    """
+    output = default
+    rekognition = Rekognition(bucket)
+    for key in list_image:
+        json = rekognition.get_text(key)
+        # part for add an image
+        output["_via_image_id_list"].append(key)
+        image = {"file_attributes": {}, "filename": key, "regions": [], "size": 1}
+        for box in json["TextDetections"]:
+            image["regions"].append(
+                {"region_attributes": {"Text": box["DetectedText"]}, "shape_attributes": {
+                    "all_points_x": [point["X"] * width for point in box["Geometry"]["Polygon"]],
+                    "all_points_y": [point["Y"] * height for point in box["Geometry"]["Polygon"]],
+                    "name": "polygon"}})
+        output["_via_img_metadata"][key] = image.copy()
     return output
 
 
