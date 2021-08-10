@@ -4,6 +4,7 @@ Part C cf schema
 from tools.aws.awsTools import DynamoDB, BucketCounter
 from tools.via.via_converter import via_json
 import time
+import json
 
 
 def main(region: str, table_name: str, batch_size: int, bucket_in: str, bucket_out: str,
@@ -33,4 +34,11 @@ def main(region: str, table_name: str, batch_size: int, bucket_in: str, bucket_o
 
 
 if __name__ == '__main__':
-    main("eu-west-3", "opteeq", 2, "dsti-lab-leo", "opteeqout", ["leo", "leo2", "leo3"])
+    with(open("conf.json", "r")) as f:
+        conf = json.load(f)
+    if conf["dynamoDB"]["region"] and conf["dynamoDB"]["table"] and conf["bucket_standardized"] and \
+            conf["bucket_initial_annotation"]:
+        main(conf["dynamoDB"]["region"], conf["dynamoDB"]["table"], conf["batch_size"],
+             conf["bucket_standardized"], conf["bucket_initial_annotation"], conf["annotator_list"])
+    else:
+        print("edit config and add missing argument")

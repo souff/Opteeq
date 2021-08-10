@@ -50,4 +50,10 @@ def download_via_json(annotator_name: str, bucket_name: str,
 
 
 if __name__ == '__main__':
-    main("leo", "opteeqout", "dsti-lab-leo")
+    with(open("conf.json", "r")) as f:
+        conf = json.load(f)
+    if conf["user"] and conf["start"] and conf["bucket_initial_annotation"] and conf[
+        "bucket_standardized"]:
+        main(conf["user"], conf["bucket_initial_annotation"], conf["bucket_standardized"])
+    else:
+        print("edit config and add missing argument")

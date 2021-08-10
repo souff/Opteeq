@@ -2,6 +2,18 @@
 
 ![image](tools/aws/aws_Diagram.png)
 
+# Configuration
+
+Before use edit conf.json. You need to edit:
+
+1. `user`: your username.
+2. `bucket_raw`: bucket where raw image are upload
+3. `bucket_standardized`: bucket where standardized image are upload
+4. `bucket_initial_annotation`: bucket where initial json annotation are uploaded
+5. `dynamoDB`: region and table name
+
+If the part that you will use don't need one of this parameter you can ignore it.
+
 # A) Rename upload
 
 Rename all the file from a folder and upload it to AWS S3 bucket.

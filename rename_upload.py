@@ -7,17 +7,17 @@ import pathlib
 from tools.aws.awsTools import Bucket
 
 
-def upload(user: str, folder: str, start: int, bucket_name: str):
+def upload(user: str, folder: str, start: int, bucket_raw: str):
     """
     Upload all the files of folder in AWS bucket, rename file with user name and number auto increment
 
     :param user: user name
     :param folder: folder to upload
     :param start: start for auto increment
-    :param bucket_name: name bucket
+    :param bucket_raw: name bucket
     :return: the final number auto increment in order to save it
     """
-    bucket = Bucket(bucket_name)
+    bucket = Bucket(bucket_raw)
     for filename in os.listdir(folder):
         bucket.upload(os.path.join(folder, filename),
                       f"{user}_{start}{pathlib.Path(filename).suffix}")
@@ -30,8 +30,8 @@ if __name__ == '__main__':
     # and execute directly with python3 rename_upload.py in console
     with(open("conf.json", "r")) as f:
         conf = json.load(f)
-    if conf["user"]:
-        conf["start"] = upload(**conf)
+    if conf["user"] and conf["bucket_raw"]:
+        conf["start"] = upload(conf["user"], conf["folder"], conf["start"], conf["bucket_raw"])
         with open("conf.json", "w") as f:
             json.dump(conf, f)
     else:
