@@ -1,12 +1,12 @@
 import io
 import json
 import os
-from typing import Iterator, Tuple, List, Union
+from typing import Iterator, Tuple, Union
 from tools.aws.awsTools import Bucket, Rekognition
 from .structure.default import default
 from google.cloud import vision
 from google.cloud.vision_v1.types.image_annotator import AnnotateImageResponse
-
+from tqdm import tqdm
 
 class Local:
     """
@@ -50,6 +50,7 @@ def request_generator(list_image: list, source_path: str, local: bool = False) \
     Return an iterator which return a tuple:
                             - name of image
                             - result google vision API request
+
     For each listed file. Can work with local file or s3.
 
     :param list_image: list all image to annotate with google vision api.
@@ -59,7 +60,7 @@ def request_generator(list_image: list, source_path: str, local: bool = False) \
     """
     client = vision.ImageAnnotatorClient()
     source = get_source(local, source_path)
-    for file in list_image:
+    for file in tqdm(list_image, desc="current batch", leave=False):
         content = source.read(file)
         image = vision.Image(content=content)
         yield file, client.text_detection(image=image)
@@ -81,7 +82,7 @@ def via_json(list_image: list, source_path: str, local: bool = False) -> dict:
         image = {"file_attributes": {}, "filename": file_name, "regions": [], "size": 1}
         for box in response.text_annotations:
             image["regions"].append(
-                {"region_attributes": {"Text": box.description}, "shape_attributes": {
+                {"region_attributes": {"Text": box.description, "type": "6"}, "shape_attributes": {
                     "all_points_x": [point.x for point in box.bounding_poly.vertices],
                     "all_points_y": [point.y for point in box.bounding_poly.vertices],
                     "name": "polygon"}})
@@ -102,17 +103,18 @@ def via_json2(list_image: list, bucket: str, width=717, height=951) -> dict:
     """
     output = default
     rekognition = Rekognition(bucket)
-    for key in list_image:
-        json = rekognition.get_text(key)
+    for key in tqdm(list_image, desc='current batch', leave=False):
+        json_response = rekognition.get_text(key)
         # part for add an image
         output["_via_image_id_list"].append(key)
         image = {"file_attributes": {}, "filename": key, "regions": [], "size": 1}
-        for box in json["TextDetections"]:
+        for box in json_response["TextDetections"]:
             image["regions"].append(
-                {"region_attributes": {"Text": box["DetectedText"]}, "shape_attributes": {
-                    "all_points_x": [point["X"] * width for point in box["Geometry"]["Polygon"]],
-                    "all_points_y": [point["Y"] * height for point in box["Geometry"]["Polygon"]],
-                    "name": "polygon"}})
+                {"region_attributes": {"type": 6, "Text": box["DetectedText"]},
+                 "shape_attributes": {
+                     "all_points_x": [point["X"] * width for point in box["Geometry"]["Polygon"]],
+                     "all_points_y": [point["Y"] * height for point in box["Geometry"]["Polygon"]],
+                     "name": "polygon"}})
         output["_via_img_metadata"][key] = image.copy()
     return output
 
@@ -129,4 +131,4 @@ def via_json_local(folder: str) -> None:
 
 
 if __name__ == '__main__':
-    via_json_local("image")
+    via_json_local("../../image")

@@ -1,3 +1,7 @@
+"""
+Default via2 json structure.
+"""
+
 default = {
     "_via_attributes": {
         "file": {},
@@ -9,13 +13,16 @@ default = {
             },
             "type": {
                 "default_options": {
-                    "1": True
+                    "6": True
                 },
                 "description": "",
                 "options": {
-                    "1": "total",
-                    "2": "date",
-                    "3": "place"
+                    "1": "Place",
+                    "2": "Total Text",
+                    "3": "Total Amount",
+                    "4": "Date",
+                    "5": "Receipt",
+                    "6": "Other"
                 },
                 "type": "radio"
             }
@@ -38,8 +45,8 @@ default = {
             "annotation_editor_height": 25,
             "image": {
                 "on_image_annotation_editor_placement": "NEAR_REGION",
-                "region_color": "__via_default_region_color__",
-                "region_label": "__via_region_id__",
+                "region_color": "type",
+                "region_label": "type",
                 "region_label_font": "10px Sans"
             },
             "image_grid": {
