@@ -145,7 +145,7 @@ class DynamoDB:
         """
         Dynamodb query.
 
-        :param kwargs: all possible kwargs for query cf dynamo db doc.
+        :param kwargs: all possible kwargs for query cf dynamo db docs.
         :return: query result
         """
         return self.client.query(**kwargs)
